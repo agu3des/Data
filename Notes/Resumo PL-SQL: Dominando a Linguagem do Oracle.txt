@@ -1,0 +1,301 @@
+PL/SQL: Dominando a Linguagem do Oracle
+Capítulo 1
+1.1 O que é PL/SQL?
+A sigla PL/SQL significa Procedural Language / Structured Query Language, caracterizando-se como uma linguagem procedural que tem como base a SQL (Linguagem de Consulta Estruturada).
+A PL/SQL é direcionada para o banco de dados Oracle.
+É escrita através de blocos de código que são executados diretamente no banco de dados, permitindo o desenvolvimento de programas complexos que processam grandes volumes de informação.
+É considerada uma linguagem robusta e muito utilizada por desenvolvedores e analistas, sustentada por sua crescente história e evolução permanente desde as primeiras versões do banco de dados Oracle.
+A PL/SQL oferece suporte a diversos recursos de programação de sistemas, incluindo: utilização de variáveis e constantes, cursores, estruturas de repetição e condicional, uso de pacotes, funções, procedimentos armazenados, tratamento de erros, chamadas à API, gatilhos, vetores, registros e execução direta de comandos SQL.
+Sua estrutura condiciona os padrões ANSI para a linguagem SQL e suporta a codificação Java.
+1.2 Por que aprender PL/SQL?
+Uma das principais vantagens em aprender PL/SQL é que ela utiliza o servidor do banco de dados para a execução e armazenamento de seus processos, o que ajuda a reduzir a carga de trabalho no cliente.
+Essa redução do número de respostas e do tráfego de informações entre a aplicação e o servidor do banco de dados aumenta o ganho de desempenho, especialmente em comunicações que dependem de uma rede cliente versus servidor.
+Outra vantagem é a portabilidade: a PL/SQL é igual para todas as diversas plataformas de hardware e software nas quais o banco de dados Oracle é implementado.
+1.3 SQL, SQL*Plus, PL/SQL: qual é a diferença?
+É crucial entender a finalidade e a importância de cada um desses produtos.
+Através do SQL*Plus, é possível introduzir comandos SQL ou blocos PL/SQL.
+O SQL*Plus encaminha esses comandos ao servidor do banco de dados.
+O servidor, por sua vez, pode direcionar o comando para o motor PL/SQL (o processador que validará e executará o bloco PL/SQL) e/ou para o executor de declarações de comandos SQL.
+Capítulo 2
+O Capítulo 2, intitulado Programação em bloco, foca na estrutura fundamental da linguagem PL/SQL: o conceito de blocos de comando.
+Estrutura do Bloco PL/SQL
+A linguagem PL/SQL opera em blocos de comando, e é possível aninhar outros blocos (chamados de sub-blocos) dentro de um bloco principal. Os blocos são utilizados para estruturar comandos e definir o comportamento de um programa.
+Um bloco PL/SQL tipicamente engloba três áreas principais:
+Área de declaração de variáveis (declare).
+Área de escopo para inserção de comandos e sub-blocos (begin-end).
+Área de tratamento de erros (exception).
+O tipo mais simples de bloco é o bloco anônimo, que não possui um cabeçalho e, portanto, não pode ser gravado diretamente no banco de dados. Para reexecutar um bloco anônimo, é necessário salvá-lo em um arquivo.
+Embora a área de declaração de variáveis (declare) e a área de tratamento de erros (exception) não sejam tecnicamente obrigatórias para a estrutura mínima do PL/SQL, a área de tratamento de erros é considerada imprescindível para o bom funcionamento do sistema. Na maioria dos programas, todas as três estruturas (declaração, comandos e tratamento de erros) estão presentes.
+Conteúdo e Funcionalidades do Bloco
+Dentro dos blocos, o PL/SQL permite adicionar praticamente todos os recursos necessários para que o programa execute ações ou procedimentos. É possível:
+Declarar variáveis e constantes.
+Executar comandos DML (select, delete, update, insert).
+Executar procedimentos armazenados e funções.
+Utilizar estruturas de repetição e de condição.
+Fazer uso de operadores relacionais e numéricos.
+Execução e Erros
+O comando / é usado para executar o bloco PL/SQL. A execução bem-sucedida é sinalizada por uma mensagem, mesmo que não haja saída impressa na tela.
+Quando ocorrem erros:
+Erros de Sintaxe: Se houver um erro de sintaxe (como um comando incorreto ou função usada indevidamente), ele é mostrado, geralmente acompanhado de informações como a linha e a coluna onde o erro ocorreu. Por exemplo, o sistema pode indicar que esperava um símbolo de atribuição (:=) mas encontrou outro elemento. Tais erros são detectados antes mesmo de o Oracle executar o bloco.
+Erros de Dados/Execução: Erros referentes a dados incorretos (como tentar somar números com caracteres alfanuméricos) são detectados durante a execução. Se houver uma área de tratamento de erros (exception), o programa transfere a ação para essa área. O pacote dbms_output pode ser utilizado para escrever mensagens na tela, como o resultado de uma soma ou uma mensagem de erro.
+Capítulo 3
+O Capítulo 3, intitulado Primeiros passos, aborda a dificuldade inicial comum no aprendizado de uma linguagem de programação, como o PL/SQL, e apresenta um roteiro prático (técnica) para começar a escrever um programa PL/SQL de forma segura.
+O capítulo foca em uma técnica que o autor utiliza e que desenvolveu por meio da compreensão da lógica, sendo um método amigável e claro, como um "bate papo entre amigos".
+A seção 3.1 Como iniciar no PL/SQL detalha os passos desse roteiro, usando como exemplo a tarefa de escrever um programa PL/SQL que imprima na tela os nomes dos empregados de um determinado gerente e de uma determinada localização.
+Primeiros Passos (Roteiro)
+Primeiro passo: Identificação e Teste de Dados
+A primeira etapa é identificar as fontes de dados (as tabelas) necessárias para o programa, se for o caso.
+Se houver dúvida na identificação das fontes de dados, o leitor pode consultar o Apêndice: SQL — Primeiros passos.
+Após a identificação das tabelas, o programador deve montar os comandos select e executá-los para verificar se os dados solicitados pelo programa estão sendo retornados.
+Esta etapa é realizada sem escrever uma única linha em PL/SQL, focando apenas na montagem e execução dos selects para validar o retorno dos dados.
+Exemplo prático: Para o enunciado proposto (imprimir nomes de empregados por gerente e localização), a consulta SQL de teste envolve as tabelas emp e dept, utilizando condições (where) para dept.loc = 'CHICAGO' (parâmetro referente à localização) e emp.mgr = '7698' (parâmetro referente ao gerente), retornando o nome, o cargo e o nome do departamento dos empregados.
+Segundo passo: Montagem da Estrutura PL/SQL
+Depois de montar todos os selects necessários, inicia-se a montagem da estrutura do programa PL/SQL.
+Neste momento, é preciso analisar o tipo de objeto que o programa requer (ex: "bloco PL/SQL anônimo", uma procedure, uma function, uma package, etc.).
+No exemplo dado (apenas imprimir na tela), o autor decide não criar uma function (que retornaria informações).
+Como também não é mencionada a necessidade de programas armazenados ou de triggers, é decidido criar um bloco PL/SQL anônimo. O autor nota que, se necessário, um cabeçalho pode ser adicionado posteriormente para transformar o objeto em um programa armazenado.
+O exemplo completo do programa é apresentado como um bloco PL/SQL anônimo que utiliza um cursor (c1) com passagem de parâmetros (localização e gerente) para iterar sobre os resultados do SELECT e imprimir o nome e o cargo do empregado na tela, usando o pacote dbms_output.put_line. O bloco inclui uma área de exception para tratamento de erros.
+Observação Importante: Para garantir que o pacote dbms_output imprima na tela, é necessário executar o comando set serveroutput on no SQL*Plus.
+Capítulo 4
+O Capítulo 4 do livro é dedicado ao Pacote dbms_output. Este pacote é fundamental para a visualização e depuração de informações em programas PL/SQL.
+O Pacote dbms_output
+O pacote dbms_output contém funções e procedimentos que permitem a geração de mensagens a partir de diversos tipos de blocos de código PL/SQL, incluindo:
+Blocos anônimos.
+Procedures.
+Packages.
+Triggers.
+O pacote utiliza um buffer em memória para a transferência dessas mensagens durante a sessão em que o programa está sendo executado. É importante executar o comando set serveroutput on no SQL*Plus para garantir que o pacote imprima as saídas na tela.
+O autor ressalta que o dbms_output será utilizado em todo o livro de PL/SQL para gerar as saídas dos exemplos, tornando seu conhecimento e uso muito importantes.
+Componentes Principais do dbms_output
+O capítulo detalha os seguintes procedimentos e funções do pacote:
+Procedimento/Função
+Descrição
+enable
+Habilita a chamada das demais rotinas do pacote.
+disable
+Desabilita a chamada das demais rotinas do pacote. Se o pacote estiver desabilitado, as mensagens não aparecerão na tela.
+put
+Inclui uma informação na área de buffer. Recebe um parâmetro cujo valor é armazenado no buffer sem incluir um caractere de fim de linha (enter).
+put_line
+Inclui uma informação na área de buffer e adiciona simultaneamente um caractere para quebra de linha (linha nova).
+get_line
+Recupera uma única linha do buffer de cada vez. Possui dois parâmetros de saída: o conteúdo da linha (line) e o status (1 para linha recuperada, % ou outro valor para nenhuma linha).
+get_lines
+Recupera várias linhas do buffer. Recebe um parâmetro que passa a quantidade de registros a serem retornados.
+
+Observações sobre a Saída de Dados
+Os valores de saída são transformados em strings (caractere). Se for desejada uma formatação diferente, deve-se usar comandos como to_char ou to_number.
+O procedimento put por si só não imprime na tela; é preciso usá-lo juntamente com o procedimento new_line para armazenar e exibir o conteúdo.
+4.1 Exceções para o Pacote dbms_output
+A seção 4.1 trata das exceções relacionadas ao pacote, enfatizando a importância de conhecê-lo e saber usá-lo, pois ele será utilizado para gerar as saídas de informação em todos os exemplos do livro de PL/SQL.
+Capítulo 5
+O Capítulo 5 é intitulado Variáveis bind e de substituição e aborda dois tipos de variáveis que podem ser utilizadas no ambiente SQL*Plus, tanto em comandos SQL quanto em programas PL/SQL.
+O capítulo é dividido nas seguintes seções:
+5.1 Variáveis bind
+5.2 Variáveis de substituição
+5.3 Utilizando variáveis em arquivos
+Abaixo está um resumo das informações contidas no Capítulo 5:
+5.1 Variáveis Bind
+Variáveis bind são declaradas dentro do SQL*Plus e podem ser usadas em todo o seu ambiente, seja em comandos SQL ou dentro de programas PL/SQL.
+Declaração e Uso: A declaração de uma variável bind é muito semelhante àquela usada no PL/SQL (nome e tipo), mas não exige uma área de declaração específica (declare), sendo definida diretamente no prompt do SQL*Plus.
+Exemplo de declaração: variable mensagem varchar2(200).
+Referência: Para recuperar ou atribuir um valor a uma variável bind em um programa PL/SQL ou comando SQL, é necessário referenciá-la usando o caractere dois pontos (:) antes de seu nome (ex: :mensagem).
+Impressão: Contudo, ao definir a variável ou forçar a impressão de seu valor na tela, o caractere especial de dois pontos não é necessário.
+5.2 Variáveis de Substituição
+As variáveis de substituição são caracterizadas por terem o caractere e comercial (&) na frente de seu nome, o que indica que estão sendo usadas.
+Definição de Valor: O comando define pode ser utilizado para alterar o valor de uma variável de substituição. Para saber o valor corrente de uma variável de substituição, usa-se o comando define seguido do nome da variável.
+Substituição de Palavras Reservadas: Variáveis de substituição podem ser usadas para substituir palavras reservadas ou sentenças SQL inteiras, como uma cláusula where ou order by, e não apenas valores alfanuméricos.
+Não Obrigatoriedade de Definição Prévia: Ao contrário das variáveis bind, as variáveis de substituição não precisam ser obrigatoriamente definidas ou declaradas. Se o motor do SQL*Plus encontra uma variável de substituição que não foi previamente definida (usando &), ele solicita um valor ao usuário.
+Tempo de Vida: A vida útil de uma variável de substituição é limitada pela sessão do SQL*Plus; ela existirá enquanto a sessão estiver ativa, assim como ocorre com as variáveis do tipo bind.
+Exclusão: Uma variável de substituição pode ter sua definição excluída usando o comando undefine.
+5.3 Utilizando Variáveis em Arquivos
+Ambos os tipos de variáveis (binds e de substituição) podem ser utilizados dentro de arquivos script e, posteriormente, executados via SQL*Plus.
+Variáveis Bind em Arquivos: Quando o SQL*Plus encontra variáveis do tipo bind em um arquivo, ele não solicita valores, pois eles já devem estar definidos na sessão.
+Variáveis de Substituição em Arquivos: Nesses casos, a solicitação de valores depende se a variável de substituição já se encontra definida na sessão ou não.
+Se não estiver definida, o SQL*Plus a solicitará sempre que o script for executado.
+Se estiver definida (usando define), o SQL*Plus faz a substituição com base no valor guardado na sessão.
+Parâmetros Indexados: É possível executar um arquivo passando um valor como parâmetro na chamada (@S_EMP.sql 10). Quando se usam indexadores (ex: &1), o SQL*Plus define automaticamente a variável na sessão, fazendo com que o valor persista nas execuções subsequentes, a menos que um novo valor seja informado.
+Comando prompt: O comando prompt pode ser usado para definir uma mensagem a ser mostrada ao usuário no momento da solicitação dos valores da variável de substituição.
+Capítulo 6
+O Capítulo 6, "Aspectos iniciais da programação PL/SQL", aborda as regras e conceitos fundamentais que devem ser seguidos ao codificar programas na linguagem PL/SQL, ressaltando que certos conceitos são universais entre as linguagens de programação.
+Abaixo está um resumo detalhado das seções contidas neste capítulo:
+6.2 Identificadores
+Esta seção discute o escopo dos identificadores:
+O escopo de um identificador, como uma variável, é limitado ao bloco onde foi declarado.
+É possível ter vários blocos encadeados, e cada um pode ter sua própria área de declaração de identificadores.
+Um identificador declarado em um bloco mais interno não pode ser acessado em um bloco mais externo.
+Por outro lado, variáveis declaradas em um bloco mais externo têm seus escopos abrangendo todo o bloco onde foram declaradas, incluindo blocos internos contidos nele.
+Um exemplo prático de um procedimento chamado folha_pagamento é fornecido para ilustrar o cálculo de IR (Imposto de Renda) dentro de um bloco interno, acessando variáveis declaradas no bloco principal (mais externo).
+6.3 Transações
+A seção introduz o conceito de transação, essencial para quem trabalha com PL/SQL:
+Uma das características bem-vindas dos bancos de dados Cliente/Servidor é o conceito de transações.
+Uma transação é definida como uma unidade lógica de trabalho que consiste em uma ou mais declarações DML (Data Manipulation Language) ou DDL (Data Definition Language).
+O controle da transação é feito por comandos necessários para controlar a efetivação ou não das modificações no banco de dados.
+Um exemplo é a transferência bancária, onde se o processo não for concluído totalmente, todas as alterações são descartadas, garantindo a consistência dos dados.
+Os comandos commit e rollback da DCL auxiliam nesse controle:
+Commit: Torna permanentes todas as alterações feitas no banco de dados durante a sessão.
+Rollback: É usado para desfazer todas as alterações feitas desde o último commit, restaurando os dados.
+No Oracle, uma transação se inicia com a execução da primeira instrução SQL e é encerrada quando as alterações são salvas ou descartadas.
+O comando set transaction também inicia uma transação explícita. Ele deve ser o primeiro comando da transação, e somente consultas são permitidas nela. Um commit, rollback ou comando DDL encerra seu efeito.
+6.4 Transações em PL/SQL
+Esta seção estende o conceito de transações ao ambiente PL/SQL:
+As transações em PL/SQL seguem os mesmos princípios, com o acréscimo do uso de savepoints.
+Savepoints permitem definir pontos de salvamento dentro do programa, embora essa não seja uma prática muito usada em códigos volumosos, pois pode dificultar o entendimento e a lógica.
+Com savepoints, é possível salvar partes de ações e também desfazer ações até o ponto de salvamento usando o comando rollback to savepoint.
+Um exemplo prático demonstra a inserção de vários registros com a definição de três savepoints (ponto_um, ponto_dois, ponto_tres), e em seguida, o uso de rollback to savepoint ponto_dois, mantendo intactas as operações anteriores a ponto_dois e descartando as posteriores.
+6.5 Trabalhando com variáveis e constantes
+Esta seção define como trabalhar com armazenamento de dados em tempo de execução:
+Variáveis e constantes são áreas em memória utilizadas para guardar informações em tempo de execução.
+Variáveis podem ter seus valores atualizados várias vezes ao longo da execução de um programa.
+Constantes nascem com um valor definido e o mantêm inalterado até o término de sua utilização.
+Variáveis e constantes são identificadores comuns no PL/SQL para manipulação de informações antes de inseri-las em tabelas, enviá-las para impressão ou exportá-las para outros sistemas.
+6.6 Tipos de dados em PL/SQL
+Esta seção trata da definição dos tipos de dados na linguagem:
+A fonte apresenta um exemplo de declaração de variáveis e constantes na área DECLARE de um bloco PL/SQL, mostrando diferentes tipos de dados e atributos, como:
+Variáveis do tipo DATE (ex: DT_ENTRADA, DT_SAIDA).
+Variáveis do tipo NUMBER (ex: QT_MAX, VL_SALARIO, CD_DEPTO).
+Variáveis do tipo CHAR (ex: NM_PESSOA).
+Constantes do tipo BOOLEAN (ex: IN_NAO).
+Uso de tipos de dados definidos pelo desenvolvedor (ex: FORNECEDOR TIPO_PESSOA).
+Uso de %TYPE para referenciar o tipo de uma coluna de tabela (ex: CD_CARGO EMPLOYEE.JOB%TYPE).
+Uso de %ROWTYPE para definir uma variável como um registro com a mesma estrutura de uma linha inteira de uma tabela (ex: REG_DEPT DEPARTMENT%ROWTYPE).
+Uma dica para usar um campo LONG na cláusula WHERE é criar uma tabela temporária com o campo alterado para o tipo CLOB, ou modificar a tabela original, se permitido.
+Capítulo 7
+O Capítulo 7 do livro é dedicado ao tema "Exceções", que são mecanismos fundamentais no Oracle para lidar com erros. Ao construir programas em PL/SQL, é essencial tratar as exceções que podem ocorrer durante a execução do sistema e de seus processos.
+Basicamente, existem dois tipos de exceções dentro do Oracle: as predefinidas e as definidas pelo usuário. O tratamento de exceções é realizado na área EXCEPTION, que deve acompanhar um bloco PL/SQL e cujo escopo é válido somente dentro dele.
+7.1 Exceções Predefinidas
+As exceções predefinidas são aquelas disparadas pelo próprio Oracle quando um erro acontece, e se não forem tratadas, o programa é abortado.
+Estrutura de Tratamento: A área de tratamento de erros é definida após o BEGIN do bloco principal ou de sub-blocos, utilizando o comando EXCEPTION. As exceções são tratadas por meio de cláusulas WHEN.
+Exceções Comuns e Casos de Uso:
+NO_DATA_FOUND: Esta exceção é disparada quando um comando SELECT INTO não retorna nenhuma linha. Tratar esta exceção permite mostrar uma mensagem mais inteligível e impede que o Oracle aborte o programa.
+TOO_MANY_ROWS: É acionada quando um comando SELECT INTO retorna múltiplas linhas. Esta exceção deve ser tratada especificamente no bloco EXCEPTION, preferencialmente antes da cláusula OTHERS.
+OTHERS: Esta é uma exceção genérica usada para tratar qualquer outro erro que não tenha sido explicitamente conhecido e tratado no programa. Usar apenas OTHERS dificulta a identificação do problema que ocorreu.
+Variáveis de Erro: Dentro do tratamento de exceções, podem-se usar variáveis para obter detalhes sobre o erro ocorrido:
+SQLERRM: Retorna a descrição do erro (já inclui o código do erro, sendo desnecessário usar SQLCODE a menos que o código seja utilizado para outra finalidade).
+SQLCODE: Retorna o código numérico do erro.
+A concatenação dessas variáveis com mensagens personalizadas torna os erros mais claros para o usuário.
+Controle de Fluxo e Interrupção: Se o tratamento da exceção fica por conta do programa, o desenvolvedor define se o sistema deve parar ou continuar.
+Propagação em Blocos Aninhados: Se uma exceção ocorrer em um bloco interno sem um tratamento específico, o programa é desviado para o primeiro tratamento encontrado em um nível mais externo.
+RAISE_APPLICATION_ERROR: É usado quando se deseja que um programa ou processo seja interrompido após uma exceção. Esta chamada desvia a execução do programa para o primeiro tratamento de erro existente que se encaixe com o erro (geralmente interceptado pela exceção OTHERS do bloco mais externo). Isso garante que o programa não continue com as ações subsequentes.
+As exceções não servem apenas para gerar mensagens de erro; dentro das áreas de tratamento, é possível chamar functions, procedures ou packages para solucionar problemas sem intervenção do usuário.
+7.2 Exceções Definidas pelo Usuário
+As exceções definidas pelo usuário são criadas para atender a lógicas de negócio específicas.
+Definição e Uso:
+Declaração: É necessário definir um nome e declará-la na área de declaração de variáveis (área DECLARE) usando o tipo EXCEPTION (Ex: werro_salario EXCEPTION).
+Acionamento: A exceção é acionada dentro do bloco de comandos usando o comando RAISE (Ex: RAISE werro_salario;).
+Fluxo: Após o RAISE, o programa é desviado para a área de tratamento de erros, seguindo a mesma hierarquia de níveis das exceções predefinidas. Quaisquer comandos que venham após a chamada RAISE nunca serão executados.
+Tratamento: A exceção definida pelo usuário deve ser tratada no bloco EXCEPTION usando a cláusula WHEN seguida do nome da exceção. Isso permite fornecer mensagens de erro muito mais específicas para problemas de lógica (ex: "O salário necessita ser maior que zero").
+As exceções definidas pelo usuário oferecem formas diferentes de controlar problemas e melhorar as mensagens, como evitar que o programa cadastre valores nulos ou zerados, usando uma estrutura IF para testar o resultado de um select e acionar a exceção customizada se necessário.
+Capítulo 8
+O Capítulo 8 trata das Estruturas de Condição: if, que são utilizadas quando há a necessidade de alterar o fluxo de caminho de um programa. Através deste tipo de estrutura, é possível criar condições que levam o programa a executar tarefas diferentes dependendo de cada situação. O comando if (se) é usado em PL/SQL para avaliar uma ou mais condições e executar (ou não) determinadas linhas de instruções. As condições podem ser simples ou aninhadas, onde um comando if está dentro de outro.
+A seguir, um resumo detalhado das estruturas apresentadas:
+8.1 Estruturas do Comando IF-END IF
+Esta é a estrutura mais simples, contendo apenas uma condição:
+Estrutura Simples: if <condicao> then <instruções> end if;.
+Funcionamento: Se o resultado da <condicao> for verdadeiro, as instruções dentro do escopo do if serão executadas. Caso contrário, o programa segue sem executar o bloco.
+O comando end if indica o fim da declaração condicional.
+8.2 Estruturas do Comando IF-ELSE-END IF
+Esta estrutura permite definir um caminho alternativo caso a condição inicial não seja atendida:
+Estrutura: É formada por um if e um else.
+Funcionamento: Se a condição do if não for atendida (for falsa), o fluxo do programa é desviado para o bloco else.
+Característica: O comando else não realiza restrição ou checagem de condição. A lógica é: se a condição for verdadeira, faça isto; se não, faça aquilo.
+8.3 Estruturas do Comando IF-ELSIF(-ELSE)-END IF
+Esta estrutura é usada para avaliar múltiplas condições sequenciais:
+Funcionamento: A cláusula elsif permite testar condições adicionais após a primeira condição if. O bloco else opcional serve para capturar qualquer situação que não satisfaça nenhuma das condições if ou elsif anteriores.
+As estruturas de condição proporcionam diversas possibilidades para que os programas possam tomar rumos diferentes para cada situação.
+É possível montar estruturas if aninhadas (um if dentro de outro if) para filtrar uma série de dados.
+8.4 Formatando as Declarações IF e 8.5 Evitando Erros Comuns no Uso de IF
+O capítulo também fornece recomendações e regras para a codificação correta das estruturas condicionais:
+Precauções na Codificação:
+Verifique se toda declaração if tem uma declaração end if correspondente.
+Verifique se a escrita de elsif está correta, evitando erros como "elseif".
+Recomenda-se evitar loops aninhados muito complexos, pois a complexidade dificulta o acompanhamento e a depuração. É aconselhável avaliar se uma função pode realizar a mesma tarefa.
+Certifique-se de que o comando end if possui um espaço.
+A pontuação é crucial: são necessários ponto e vírgula (;) após end if e após cada uma das instruções, mas não depois da palavra-chave then.
+Funções Auxiliares: A função mod pode ser utilizada para retornar o resto da divisão entre dois números passados por parâmetro.
+Visualização de Saída: Para visualizar a saída do dbms_output no SQL*Plus, é necessário executar o comando set serveroutput on.
+Capítulo 9
+O Capítulo 9 é intitulado "Comandos de repetição" e foca nas estruturas utilizadas em PL/SQL para executar ações repetidamente, baseando o início e a finalização dessas repetições em critérios condicionais.
+O capítulo detalha os três tipos principais de loops (laços) disponíveis no PL/SQL: for loop, while loop e loop (simples).
+9.1 for loop
+O for loop é a estrutura de repetição ideal para quando o desenvolvedor sabe especificamente quantas vezes a ação deve ser executada.
+Funcionamento: Um exemplo prático demonstrado é a impressão da tabuada de cinco, repetindo o bloco PL/SQL dez vezes, começando em 1.
+Variável de Iteração: A variável de incremento (como i no exemplo) não precisa ser declarada na área DECLARE, pois o for loop a declara automaticamente dentro do seu escopo.
+Contagem Reversa (REVERSE): É possível utilizar o comando REVERSE em conjunto com o for para que a contagem ocorra de forma contrária (decrementando). Neste caso, a variável inicia com o valor mais alto do intervalo e é decrementada até chegar ao valor mais baixo (por exemplo, de 10 a 1).
+Loops Aninhados: Os loops for podem ser executados de forma aninhada. O loop externo é executado primeiro, seguido pelos internos.
+Lógica Programática: A variável de incremento do loop pode ser usada como parte da lógica do programa (por exemplo, dentro de uma estrutura if) para determinar se determinadas ações devem ser executadas.
+9.2 while loop
+O while loop deve ser utilizado quando não há certeza de quantas vezes a repetição será executada.
+Uso: O número de repetições dependerá do tamanho de uma string ou de uma variável informada. O controle é realizado pela existência da condição contida no comando while.
+Flexibilidade: O while loop é o loop mais utilizado, pois oferece maior flexibilidade.
+9.3 loop (Loop Simples)
+O loop simples é usado quando se deseja criar um loop do tipo repeat until.
+Controle de Saída: A saída do loop simples é controlada pelas declarações exit e exit when.
+exit: Encerra o loop imediatamente e passa o controle para a declaração seguinte.
+exit when: Permite especificar a condição para sair do loop. Se o resultado da condição for verdadeiro, o loop é encerrado; se for falso, a repetição continua.
+Regra de Codificação: Ao usar exit ou exit when, é recomendado colocá-los sempre no início ou no final do bloco loop para evitar erros lógicos.
+9.4 Qual loop deve-se usar?
+Esta seção oferece diretrizes sobre quando aplicar cada tipo de loop:
+for: Use sempre que souber especificamente quantas vezes o loop deve ser executado. Se for necessário codificar uma declaração exit ou exit when em um loop for, o código deve ser reavaliado.
+while: Use quando houver incerteza sobre a execução do loop. É o mais adequado quando a situação é condicional.
+loop (Simples): Use para criar um loop do tipo repeat until.
+Orientações Adicionais:
+Deve-se criar variáveis de limite superior e inferior nos loops for se um dos limites puder ser alterado no futuro.
+Deve-se evitar erros comuns, como esquecer o espaço em end loop ; ou o ponto e vírgula após end loop ;.
+É importante não definir as variáveis de um loop de modo que o limite inferior tenha um valor maior que o limite superior, a menos que se use REVERSE corretamente.
+Capítulo 10
+O Capítulo 10 do material fornecido é intitulado "Cursores" e detalha o uso e os tipos de cursores, que são comandos do PL/SQL que permitem a construção de uma estrutura de repetição para varrer tabelas linha por linha e manipular dados.
+O uso de um cursor geralmente envolve três etapas principais: abertura, recuperação/manipulação dos registros e fechamento.
+Abaixo está um resumo detalhado das seções do Capítulo 10:
+10.1 Cursores Explícitos
+Os cursores explícitos são enfatizados no livro por permitirem atender a situações bem específicas.
+Declaração e Estrutura:
+Declaração: Um cursor explícito deve ser declarado, seguindo as mesmas regras de variáveis e constantes. A estrutura começa com a expressão cursor <nome cursor> is, seguida pelo comando select que define sua base.
+SELECT: O comando select que define o cursor não requer a cláusula into.
+Variável de Linha (%ROWTYPE): É comum declarar uma variável do tipo %rowtype referenciando o cursor (e.g., r1 c1%rowtype;). Esta variável funciona como um array que armazena os dados de uma linha retornada pelo cursor.
+Se o %rowtype referenciar uma tabela (e.g., emp%rowtype), o select do cursor deve incluir todas as colunas da tabela, pois a estrutura do cursor é comparada com a estrutura da tabela (nomes, quantidades e tipos devem ser idênticos).
+Uso:
+Abertura: Usa-se o comando open c1;.
+Recuperação (Fetch): O comando fetch c1 into r1; é usado para retornar apenas um registro por vez para a variável de linha (r1).
+Repetição: Como o fetch retorna apenas uma linha, é essencial usar uma estrutura de repetição (geralmente um loop simples) para processar todos os registros do select.
+Saída do Loop: Para controlar quando o loop deve terminar, usa-se a cláusula exit when c1%notfound. O atributo %notfound indica a não existência de mais registros a serem lidos no cursor.
+Fechamento: Usa-se o comando close c1;.
+Escopo: A variável do cursor (e.g., r1.ename) não pode ser usada antes da abertura e fetch, nem após o fechamento.
+Passagem de Parâmetros: Os cursores podem receber valores por parâmetro, permitindo a restrição de dados. A passagem nomeada (parametro => valor) permite que a ordem dos parâmetros seja invertida na chamada, desde que os nomes sejam informados corretamente.
+10.2 Cursor For Loop
+O uso de cursores com for loop é considerado mais cômodo, pois o bloco executa automaticamente as operações de abertura, fetch e fechamento. O desenvolvedor deve usar exit ou exit when apenas se desejar parar a execução antes que todos os registros sejam lidos.
+10.3 Cursor For Loop com Definição Interna
+Este recurso permite declarar o comando select diretamente dentro da definição do for loop, eliminando a necessidade de declará-lo na área DECLARE do bloco PL/SQL.
+10.4 Cursores Implícitos
+Cursores implícitos são criados automaticamente pelo Oracle:
+Comandos DML: O Oracle cria, abre, executa e fecha um cursor implícito ao executar comandos delete, insert ou update.
+SELECT INTO: Ao executar um select into em PL/SQL, o Oracle cria um cursor implícito, executa um primeiro fetch para retornar uma linha, e um segundo fetch para verificar se há mais de uma linha, fechando o cursor em seguida.
+Tratamento de Exceções: O uso de select into faz com que o Oracle acione exceções nativas, como no_data_found (nenhuma linha retornada) ou too_many_rows (múltiplas linhas retornadas). Se houver certeza de que o select retornará apenas uma linha, é possível usar o cursor explícito, embora isso seja mais trabalhoso para o desenvolvedor, pois ele deve tratar essas exceções.
+10.5 Atributos de Cursor Explícito e Implícito
+Os atributos fornecem informações sobre o cursor e auxiliam o desenvolvedor a tomar decisões no fluxo do programa.
+Atributo
+Descrição
+Aplicabilidade
+%isopen
+Retorna TRUE se o cursor estiver aberto e FALSE se estiver fechado.
+Apenas Cursores Explícitos.
+%found
+Indica se a última operação fetch foi bem-sucedida (retornou linha), ou se um comando DML afetou uma ou mais linhas.
+Explícitos e Implícitos (usando SQL%found para implícitos).
+%notfound
+Oposto de %found. Retorna TRUE se o último fetch não retornou uma linha, ou se um DML não afetou nenhuma linha. Não deve ser usado para verificar o não retorno de linha em select into, pois isso dispara a exceção no_data_found.
+Explícitos e Implícitos (usando SQL%notfound para implícitos).
+%rowcount
+Retorna o número de linhas lidas (explícitos) ou o número de linhas afetadas por um comando DML.
+Explícitos e Implícitos (usando SQL%rowcount para implícitos).
+
+10.6 Cursores Encadeados
+Cursores encadeados (aninhados) permitem que um cursor seja manipulado dentro de outro. Um exemplo comum é um cursor externo que seleciona gerentes e um cursor interno que lista os subordinados, utilizando um valor do cursor externo como parâmetro para o interno. O for loop simplifica a abertura e fechamento dessas estruturas aninhadas.
+10.7 Cursor com FOR UPDATE
+A instrução for update é usada em um cursor para garantir que, enquanto o cursor estiver varrendo as linhas de uma tabela (geralmente para atualização ou exclusão), nenhuma outra sessão possa manipular esses dados. Isso realiza um lock nas linhas, garantindo acesso exclusivo.
+Liberação de Lock: O lock é liberado mediante a execução de um rollback ou commit.
+Especificação de Colunas: Ao usar for update em um select com múltiplas tabelas, é possível determinar quais tabelas devem ser locadas informando suas colunas (e.g., for update of ename).
+NOWAIT: A diretriz nowait impede que a sessão fique esperando por um recurso que já esteja locado por outra sessão. Se o recurso estiver ocupado, uma exceção é disparada (ORA-00054).
+CURRENT OF: Esta cláusula é usada em comandos update ou delete dentro do loop do cursor (e.g., delete emp where current of c1;). Isso utiliza o rowid da linha do cursor, proporcionando o acesso mais direto e rápido ao registro.
+Ao utilizar current of em um cursor que usa múltiplas tabelas na cláusula from, é mandatório definir explicitamente as colunas na cláusula for update para locar apenas uma tabela, pois o Oracle só pode usar rowids de uma única tabela.
+
