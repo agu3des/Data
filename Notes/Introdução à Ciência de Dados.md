@@ -120,3 +120,9 @@ O desenvolvimento de uma solução de aprendizado de máquina raramente é um pr
     2. Engenharia – Reconhecimento de fala por sistemas de assistente digital, como Alexa, Google Assistant e Siri.  
     3. Geologia – Detecção de tipos específicos de rochas e minerais e interpretação de padrões temporais em gravações de matrizes sísmicas.  
     4. Biomédica – Uso de padrões biométricos para identificar células tumorais e cancerígenas no corpo.
+
+## Profissão na Área de Dados 
+### Profissionais
+- Analista de Dados: Os analistas de dados consultam, processam, fornecem relatórios, resumem e visualizam dados. 
+- Engenheiro de Dados: Os engenheiros de dados são responsáveis por criar e operacionalizar pipelines de dados para coletar e organizar dados. 
+- Cientista de Dados: Os cientistas de dados aplicam estatísticas, aprendizado de máquina e abordagens analíticas para responder a questões críticas de negócios.
