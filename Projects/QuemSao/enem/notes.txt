@@ -1,8 +1,0 @@
-One-hot encoding:
-
-técnica para variáveis categóricas nominais, ou seja, variáveis que não tem ordenação entre si , como no nosso caso TP_SEXO 
-
-Ordinal enconding:
-técnica para variáveis categóricas ordinais, ou seja, variáveis que possuem ordenação entre si ,como no nosso caso as questões(A,B,C,D,E,F) 
-
-para ajudar com isso, utilizaremos o módulo category_encoders, ele é bem compatível com o scikit_learn
